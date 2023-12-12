@@ -7,18 +7,20 @@ import PanelUI from './components/PanelUI.jsx'
 import { SocketProvider } from './context/SocketContext.jsx'
 import { DocProvider } from './context/DocContext.jsx'
 import { RhinoProvider } from './context/RhinoContext.jsx'
-
+import {VRButton,XR,Controllers,Hands} from '@react-three/xr'
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 root.render(
     <StrictMode>
+        <VRButton/>
         <SocketProvider>
             <RhinoProvider>
                 <DocProvider>
                     <PanelUI />
                     <Canvas
-                        shadows={false}
+                        shadows={true}
+                        shadowMap
                         camera={{
                             fov: 45,
                             near: 0.1,
@@ -27,7 +29,12 @@ root.render(
 
                         }}
                     >
-                        <Experience />
+                        <XR>
+                            <Controllers/>
+                            <Hands/>
+                            <Experience />
+                        </XR>
+
                     </Canvas>
                 </DocProvider>
             </RhinoProvider>
