@@ -1,0 +1,20 @@
+/*panel.css*/
+
+aside{
+  position: fixed;
+  width: 250px;
+  height: 100vh;
+  background-color: rgba(255, 115, 0, 0.168);
+  color: black;
+ padding: 10px;
+ border: 1px solid black;
+ z-index: 1000; /* Ensure the nav is above other elements */
+}
+
+table,td,th{
+  border: 1px solid black;
+  width: 250px;
+  text-align: center;
+  font-size: small;
+}
+
