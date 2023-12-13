@@ -3,13 +3,13 @@ import { Button3d } from "./UIHelper"
 import { Float } from "@react-three/drei"
 
 const startUpButton = {
-    width: 1,
-    height: 1,
+    width: 0.1,
+    height: 0.1,
     color: 'black',
-    position: { x: 0, y: 2, z: 0.01 },
-    padding: 0.1,
+    position: { x: 0, y: 1.7, z: -0.5 },
+    padding: 0.01,
     paddingColor: 'gray',
-    padPosition: { x: 0, y: 2, z: -0.02 }
+    padPosition: { x: 0, y: 1.7, z: -0.51 }
 }
 export default function StartUp({ ...meshProps }) {
     const buttonRef = useRef()

@@ -6,6 +6,7 @@ import { StrictMode } from 'react'
 import { VRButton, XR, Controllers, Hands } from '@react-three/xr'
 import StartUp from './UI/StartUp.jsx'
 import { Perf } from 'r3f-perf'
+import { Sky } from '@react-three/drei'
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
@@ -23,11 +24,11 @@ root.render(
                         }}
                     >
                         <XR>
-                            <Perf position='top-left' />
+                            <Sky/>
                             <Controllers />
                             <Hands />
-                            <StartUp />
                             <Experience />
+                            <StartUp />
                         </XR>
                     </Canvas>
     </StrictMode>
