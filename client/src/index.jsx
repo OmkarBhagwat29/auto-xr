@@ -15,10 +15,6 @@ const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 root.render(
     <StrictMode>
-        <SocketProvider>
-            <RhinoProvider>
-                <DocProvider>
-                    {/* <PanelUI /> */}
                     <VRButton />
                     <Canvas
                         shadows={true}
@@ -39,8 +35,5 @@ root.render(
                         </XR>
 
                     </Canvas>
-                </DocProvider>
-            </RhinoProvider>
-        </SocketProvider>
     </StrictMode>
 )
