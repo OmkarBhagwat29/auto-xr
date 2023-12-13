@@ -1,12 +1,8 @@
 
-import { OrbitControls, Box, useHelper, BakeShadows, SoftShadows, AccumulativeShadows, RandomizedLight, ContactShadows, PerspectiveCamera,RoundedBox, Sky } from '@react-three/drei'
-import Model from './components/Model'
+import { OrbitControls, ContactShadows, Sky } from '@react-three/drei'
 
 import { useRef } from 'react'
-import * as THREE from 'three'
-import { useControls } from 'leva'
-import DefaultUp from './components/DefaultUp'
-import { useThree } from '@react-three/fiber'
+
 
 export default function Experience() {
     const dirLight = useRef()
