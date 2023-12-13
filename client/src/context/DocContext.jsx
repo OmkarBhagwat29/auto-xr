@@ -9,7 +9,6 @@ const DocProvider = (props)=>{
 
     const rhino = useRhino()
     const socket = useSocket()
-
     const [doc,setDoc]=useState(null)
 
     useEffect(() => {
