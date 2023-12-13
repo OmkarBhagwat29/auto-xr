@@ -25,6 +25,9 @@ export const Button3d = React.forwardRef(({ transparent = false, opacity = 0.5, 
   // Set the merged geometry to the mesh
   const mergeMesh = new THREE.Mesh(mergedGeometry, new THREE.MeshStandardMaterial({ 'color': color, 'side': THREE.DoubleSide, transparent: transparent, opacity: opacity }))
 
+   // Add hover user data
+   mergeMesh.userData = { hover: true,clickable:true, selectable:true };
+
   return <group ref={ref} >
     <primitive  position={[position.x, position.y, position.z]} object={mergeMesh} onClick={onClick} />
     {text && <Center position={[position.x, position.y, position.z+0.005]}>
