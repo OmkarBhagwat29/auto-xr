@@ -5,6 +5,8 @@ node_modules/
 # Ignore node_modules inside client and server folders
 client/node_modules/
 server/node_modules/
+client/dist/
+server/dist/
 
 # Environment files
 .env
