@@ -24,8 +24,5 @@ export default function Experience() {
         <ambientLight intensity={1.5} />
 
         <Sky/>
-
-        <Model/>
-
     </>
 }
