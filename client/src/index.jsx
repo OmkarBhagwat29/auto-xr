@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
 import Experience from './Experience.jsx'
 import { StrictMode } from 'react'
-import PanelUI from './components/PanelUI.jsx'
-import { SocketProvider } from './context/SocketContext.jsx'
-import { DocProvider } from './context/DocContext.jsx'
-import { RhinoProvider } from './context/RhinoContext.jsx'
 import { VRButton, XR, Controllers, Hands } from '@react-three/xr'
 import StartUp from './UI/StartUp.jsx'
 import { Perf } from 'r3f-perf'
@@ -33,7 +29,6 @@ root.render(
                             <StartUp />
                             <Experience />
                         </XR>
-
                     </Canvas>
     </StrictMode>
 )
