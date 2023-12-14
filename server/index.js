@@ -1,7 +1,5 @@
 import express from "express"
 import http from 'http'
-import fs  from 'fs'
-import path from "path"
 
 import { Server } from 'socket.io'
 import cors from 'cors'
@@ -21,31 +19,13 @@ const io = new Server(server,{
 io.on("connection",(socket)=>{
     console.log('user id =>',socket.id);
 
-    socket.on("rhino_file",(filePath)=>
+    socket.on("rhino_file",(buffer)=>
     {
         //get my local file path here
-       console.log(socket.id,"=>",filePath);
-
-       // Read the binary content of the Rhino3dm file
-       fs.readFile(filePath,(err,data)=>{
-        if (err) {
-            console.error("Error reading file:", err);
-            // Handle the error, send an error message to the client, etc.
-        } else {
-            // Send the binary data to the client
-            
-            const fileName = path.basename(filePath);
-            
-            const obj = { fileName: fileName, fileContent: data }
-            //console.log(obj);
-            socket.broadcast.emit("rhf", obj);
-        }
-       })
+       console.log(socket.id,"=>",'buffer received');
+       const obj = {  fileContent: buffer }
+       socket.broadcast.emit("rhf", obj);
     })
-
-    // socket.on('myText',(data)=>{
-    //     console.log(data);
-    // })
 })
 
 server.listen(3001,()=>{

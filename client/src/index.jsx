@@ -7,11 +7,17 @@ import { VRButton, XR, Controllers, Hands } from '@react-three/xr'
 import StartUp from './UI/StartUp.jsx'
 import { Perf } from 'r3f-perf'
 import { Sky } from '@react-three/drei'
+import { SocketProvider } from './context/SocketContext.jsx'
+import { RhinoProvider } from './context/RhinoContext.jsx'
+import { DocProvider } from './context/DocContext.jsx'
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 root.render(
     <StrictMode>
+        <SocketProvider>
+            <RhinoProvider>
+                <DocProvider>
                     <VRButton />
                     <Canvas
                         shadows={true}
@@ -24,12 +30,15 @@ root.render(
                         }}
                     >
                         <XR>
-                            <Sky/>
+                            <Sky />
                             <Controllers />
                             <Hands />
                             <Experience />
                             <StartUp />
                         </XR>
                     </Canvas>
+                </DocProvider>
+            </RhinoProvider>
+        </SocketProvider>
     </StrictMode>
 )
