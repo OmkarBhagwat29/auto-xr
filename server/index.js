@@ -21,7 +21,7 @@ io.on("connection",(socket)=>{
 
     socket.on("rhino_file",(buffer)=>
     {
-        //get my local file path here
+        //get buffer
        console.log(socket.id,"=>",'buffer received');
        const obj = {  fileContent: buffer }
        socket.broadcast.emit("rhf", obj);
