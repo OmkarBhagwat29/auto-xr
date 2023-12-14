@@ -17,9 +17,7 @@ const DocProvider = (props)=>{
             return
 
         const assignDoc = (rhinoData)=>{
-
             const doc = rhino.File3dm.fromByteArray(rhinoData.fileContent)
-            
             setDoc(doc)
         }
         socket.on("rhf", assignDoc);

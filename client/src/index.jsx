@@ -6,7 +6,6 @@ import { StrictMode } from 'react'
 import { VRButton, XR, Controllers, Hands } from '@react-three/xr'
 import StartUp from './UI/StartUp.jsx'
 import { Perf } from 'r3f-perf'
-import { Sky } from '@react-three/drei'
 import { SocketProvider } from './context/SocketContext.jsx'
 import { RhinoProvider } from './context/RhinoContext.jsx'
 import { DocProvider } from './context/DocContext.jsx'
@@ -30,7 +29,6 @@ root.render(
                         }}
                     >
                         <XR>
-                            <Sky />
                             <Controllers />
                             <Hands />
                             <Experience />

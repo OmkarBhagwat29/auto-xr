@@ -9,25 +9,35 @@ app.use(cors()); //middleware
 
 const server = http.createServer(app)
 
-const io = new Server(server,{
-    cors:{
+const io = new Server(server, {
+    cors: {
         origin: "http://localhost:3000", //frontend running on
-        methods:["Get","Post"],
+        methods: ["Get", "Post"],
     }
 })
 
-io.on("connection",(socket)=>{
-    console.log('user id =>',socket.id);
+io.on("connection", (socket) => {
+    try {
+        console.log('user id =>', socket.id);
 
-    socket.on("rhino_file",(buffer)=>
-    {
-        //get buffer
-       console.log(socket.id,"=>",'buffer received');
-       const obj = {  fileContent: buffer }
-       socket.broadcast.emit("rhf", obj);
-    })
-})
+        socket.on("doc", (data) => {
+            try {
+                // Convert the received Base64 string to a byte array
+                const byteArray = Buffer.from(data, 'base64');
 
-server.listen(3001,()=>{
+                //get buffer
+                console.log(socket.id, "=>", byteArray);
+                const obj = { fileContent: byteArray };
+                socket.broadcast.emit("rhf", obj);
+            } catch (error) {
+                console.error("Error processing 'doc' event:", error);
+            }
+        });
+    } catch (error) {
+        console.error("Error handling 'connection' event:", error);
+    }
+});
+
+server.listen(3001, () => {
     console.log("server listening on 3001")
 })
