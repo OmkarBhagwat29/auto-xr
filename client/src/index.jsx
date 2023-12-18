@@ -9,6 +9,7 @@ import { Perf } from 'r3f-perf'
 import { SocketProvider } from './context/SocketContext.jsx'
 import { RhinoProvider } from './context/RhinoContext.jsx'
 import { DocProvider } from './context/DocContext.jsx'
+import PanelUI from './components/PanelUI.jsx'
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
@@ -17,6 +18,7 @@ root.render(
         <SocketProvider>
             <RhinoProvider>
                 <DocProvider>
+                    <PanelUI />
                     <VRButton />
                     <Canvas
                         shadows={true}
@@ -28,6 +30,7 @@ root.render(
 
                         }}
                     >
+
                         <XR>
                             <Controllers />
                             <Hands />

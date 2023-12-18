@@ -119,6 +119,7 @@ export default function PanelUI() {
                                                 <option value="shaded">shade</option>
                                                 <option value="wireframe">wireframe</option>
                                                 <option value="ghosted">ghost</option>
+                                                <option value="rendered">ghost</option>
                                             </select>
                                         </td>
                                         <td>

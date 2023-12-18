@@ -24,15 +24,20 @@ io.on("connection", (socket) => {
             try {
                 // Convert the received Base64 string to a byte array
                 const byteArray = Buffer.from(data, 'base64');
-
                 //get buffer
                 console.log(socket.id, "=>", byteArray);
                 const obj = { fileContent: byteArray };
-                socket.broadcast.emit("rhf", obj);
+                socket.broadcast.emit("rhf", obj);                
             } catch (error) {
                 console.error("Error processing 'doc' event:", error);
             }
         });
+
+        socket.on("message",(data)=>{
+            console.log(data);
+            socket.broadcast.emit("offMe",data)
+        })
+
     } catch (error) {
         console.error("Error handling 'connection' event:", error);
     }

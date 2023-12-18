@@ -9,8 +9,7 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "4.1",
-    "vite": "^4.5.0"
+    "@vitejs/plugin-react": "4.1"
   },
   "dependencies": {
     "@react-three/drei": "^9.89.0",

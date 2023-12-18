@@ -11,21 +11,25 @@ const DocProvider = (props)=>{
     const socket = useSocket()
     const [doc,setDoc]=useState(null)
 
+    const assignDoc = (rhinoData)=>{
+        const doc = rhino.File3dm.fromByteArray(rhinoData.fileContent)
+        setDoc(doc)
+        socket.emit("message",{content:"Disconnect Me!!!!"})
+    }
+
     useEffect(() => {
 
         if(!rhino)
+        {
             return
-
-        const assignDoc = (rhinoData)=>{
-            const doc = rhino.File3dm.fromByteArray(rhinoData.fileContent)
-            setDoc(doc)
         }
         socket.on("rhf", assignDoc);
 
         return ()=>{
-            socket.off("rhf", setDoc);
+            console.log('rhf is OFF');
+            socket.off("rhf", assignDoc);
         }
-      }, [rhino,socket]);
+      }, [rhino]);
 
 
     return(<DocContext.Provider value={doc}>
