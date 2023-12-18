@@ -7,7 +7,7 @@ const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io.connect("http://13.235.67.15/:3001");
+    const newSocket = io.connect("http://localhost:3001");
 
     setSocket(newSocket);
     console.log("Socket Connected")
