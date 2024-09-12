@@ -35,7 +35,7 @@ root.render(
                             <Controllers />
                             <Hands />
                             <Experience />
-                            <StartUp />
+                            {/* <StartUp /> */}
                         </XR>
                     </Canvas>
                 </DocProvider>
