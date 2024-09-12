@@ -1,5 +1,6 @@
 This repo has client and server side code. 
-Server side code receives data from rhino using websocket and Client side code displays that data.
+Server side code receives data from rhino using websocket and Client side code displays that data. 
+Refer rhinoXR repo (https://github.com/OmkarBhagwat29/rhinoXR) for how rhino sends data using websocket
 
 
 
