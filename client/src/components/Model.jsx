@@ -12,33 +12,45 @@ export default function Model() {
     const [model, setModel] = useState(null);
 
 
-    useEffect(() => {
+    const LoadRhinoModel = async () => {
 
-        if(!doc)
-            return
+        // create a copy of the doc.toByteArray data to get an ArrayBuffer
+        const buffer = new Uint8Array(doc.toByteArray()).buffer;
 
-        const LoadRhinoModel = async () => {
+        const loader = new Rhino3dmLoader();
+        loader.setLibraryPath('https://unpkg.com/rhino3dm@8.0.0-beta2/');
+        //console.log(doc)
 
-            // create a copy of the doc.toByteArray data to get an ArrayBuffer
-            const buffer = new Uint8Array(doc.toByteArray()).buffer;
+        loader.parse(buffer, (obj) => {
+            obj.rotation.x = -Math.PI / 2; // Rotate around x-axis
 
-            const loader = new Rhino3dmLoader();
-            loader.setLibraryPath('https://unpkg.com/rhino3dm@8.0.0-beta2/');
-            //console.log(doc)
-            
-            loader.parse(buffer, (obj) => {
+            obj.traverse(o => {
+                o.castShadow = true
+                o.receiveShadow = true
 
-                obj.rotation.x = -Math.PI / 2; // Rotate around x-axis
+                const att = o.userData.attributes
 
-                obj.traverse(o => {
-                    o.castShadow = true
-                    o.receiveShadow = true
-                })
+                // Check if userData.attributes is defined before accessing drawColor
+                if (att && att.drawColor) {
+                    const c = att.drawColor
 
-                setModel(obj)
+                    o.material = o.material.clone()
+                    o.material.color.setRGB(c.r/255,c.g/255,c.b/255)
+                }
 
             })
-        }
+
+            setModel(obj)
+
+        }, (error) => {
+            console.log(error)
+        })
+    }
+
+    useEffect(() => {
+
+        if (!doc)
+            return
 
         LoadRhinoModel()
     }, [doc])

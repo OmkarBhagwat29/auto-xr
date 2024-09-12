@@ -1,3 +1,17 @@
+# Visual Studio Code
+.vscode/
+
+# Visual Studio
+*.suo
+*.user
+*.suo
+*.user
+*.sdf
+*.opensdf
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
 
 # Ignore node_modules in the project root
 node_modules/
@@ -5,6 +19,8 @@ node_modules/
 # Ignore node_modules inside client and server folders
 client/node_modules/
 server/node_modules/
+client/dist/
+server/dist/
 
 # Environment files
 .env

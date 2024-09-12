@@ -1,7 +1,5 @@
 import express from "express"
 import http from 'http'
-import fs  from 'fs'
-import path from "path"
 
 import { Server } from 'socket.io'
 import cors from 'cors'
@@ -11,43 +9,40 @@ app.use(cors()); //middleware
 
 const server = http.createServer(app)
 
-const io = new Server(server,{
-    cors:{
+const io = new Server(server, {
+    cors: {
         origin: "http://localhost:3000", //frontend running on
-        methods:["Get","Post"],
+        methods: ["Get", "Post"],
     }
 })
 
-io.on("connection",(socket)=>{
-    console.log('user id =>',socket.id);
+io.on("connection", (socket) => {
+    try {
+        console.log('user id =>', socket.id);
 
-    socket.on("rhino_file",(filePath)=>
-    {
-        //get my local file path here
-       console.log(socket.id,"=>",filePath);
+        socket.on("doc", (data) => {
+            try {
+                // Convert the received Base64 string to a byte array
+                const byteArray = Buffer.from(data, 'base64');
+                //get buffer
+                console.log(socket.id, "=>", byteArray);
+                const obj = { fileContent: byteArray };
+                socket.broadcast.emit("rhf", obj);                
+            } catch (error) {
+                console.error("Error processing 'doc' event:", error);
+            }
+        });
 
-       // Read the binary content of the Rhino3dm file
-       fs.readFile(filePath,(err,data)=>{
-        if (err) {
-            console.error("Error reading file:", err);
-            // Handle the error, send an error message to the client, etc.
-        } else {
-            // Send the binary data to the client
-            
-            const fileName = path.basename(filePath);
-            
-            const obj = { fileName: fileName, fileContent: data }
-            //console.log(obj);
-            socket.broadcast.emit("rhf", obj);
-        }
-       })
-    })
+        socket.on("message",(data)=>{
+            console.log(data);
+            socket.broadcast.emit("offMe",data)
+        })
 
-    // socket.on('myText',(data)=>{
-    //     console.log(data);
-    // })
-})
+    } catch (error) {
+        console.error("Error handling 'connection' event:", error);
+    }
+});
 
-server.listen(3001,()=>{
+server.listen(3001, () => {
     console.log("server listening on 3001")
 })

@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "deploy": "vercel --prod",
     "build": "vite build"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "4.1",
-    "vite": "^4.5.0"
+    "@vitejs/plugin-react": "4.1"
   },
   "dependencies": {
     "@react-three/drei": "^9.89.0",
@@ -22,6 +22,7 @@
     "rhino3dm": "^8.0.1",
     "socket.io-client": "^4.7.2",
     "three": "^0.159.0",
+    "vercel": "^32.7.1",
     "vite-plugin-copy": "^0.1.6"
   }
 }
