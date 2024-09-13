@@ -1,5 +1,5 @@
-import { OrbitControls,ContactShadows,Sky } from "@react-three/drei";
-import Model from "./components/Model";
+import { OrbitControls, ContactShadows, Sky } from "@react-three/drei";
+
 
 export default function Experience() {
 
@@ -12,6 +12,6 @@ export default function Experience() {
         <directionalLight position={[1, 2, 3]} intensity={4.5} />
         <ambientLight intensity={1.5} />
 
-        <Model />
+        {/* <Model /> */}
     </>
 }
