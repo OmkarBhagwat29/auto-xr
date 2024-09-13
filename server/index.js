@@ -16,18 +16,22 @@ const io = new Server(server, {
   },
 });
 
+const geometryAddKey = "geometry_added";
+
+const g1 = "get added rhino geometry";
+
 io.on("connection", (socket) => {
   try {
     console.log("user id =>", socket.id);
 
-    socket.on("doc", (data) => {
+    socket.on(geometryAddKey, (data) => {
       try {
         // data is the json object
         //const byteArray = Buffer.from(data, 'base64');
         //get buffer
         console.log(socket.id, "=>", data);
         //const obj = { jsonObj: data };
-        socket.broadcast.emit("rhf", data);
+        socket.broadcast.emit(g1, data);
       } catch (error) {
         console.error("Error processing 'doc' event:", error);
       }

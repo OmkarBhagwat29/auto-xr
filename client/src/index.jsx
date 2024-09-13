@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 root.render(
     <StrictMode>
-        <App />
+
 
         <Canvas
             shadows={true}
@@ -22,13 +22,9 @@ root.render(
 
             }}
         >
+            <Experience />
+            <App />
 
-            <XR>
-                <Controllers />
-                <Hands />
-                <Experience />
-                {/* <StartUp /> */}
-            </XR>
         </Canvas>
 
     </StrictMode>

@@ -19,7 +19,7 @@
     "r3f-perf": "7.1",
     "react": "18.2",
     "react-dom": "18.2",
-    "rhino3dm": "^8.0.1",
+    "rhino3dm": "^8.9.0",
     "socket.io-client": "^4.7.2",
     "three": "^0.159.0",
     "vercel": "^32.7.1",
