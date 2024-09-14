@@ -17,8 +17,11 @@ const io = new Server(server, {
 });
 
 const geometryAddKey = "geometry_added";
+const geometryDeleteKey = "geometry_delete";
 
-const g1 = "get added rhino geometry";
+const geomAddedBoradcast = "get added rhino geometry";
+
+const geomDeletedcast = "rhino geometry deleted";
 
 io.on("connection", (socket) => {
   try {
@@ -26,19 +29,23 @@ io.on("connection", (socket) => {
 
     socket.on(geometryAddKey, (data) => {
       try {
-        // data is the json object
-        //const byteArray = Buffer.from(data, 'base64');
-        //get buffer
-        console.log(socket.id, "=>", data);
-        //const obj = { jsonObj: data };
-        socket.broadcast.emit(g1, data);
+        socket.broadcast.emit(geomAddedBoradcast, data);
       } catch (error) {
         console.error("Error processing 'doc' event:", error);
       }
     });
 
+    socket.on(geometryDeleteKey, (data) => {
+      try {
+        console.log(data);
+        socket.broadcast.emit(geomDeletedcast, data);
+      } catch (error) {
+        console.error("Error processing 'socket' event:", error);
+      }
+    });
+
     socket.on("message", (data) => {
-      console.log(data);
+      //console.log(data);
       socket.broadcast.emit("offMe", data);
     });
   } catch (error) {
