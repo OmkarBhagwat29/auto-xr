@@ -11,64 +11,72 @@ const Add = ({ socket, addedObjectsRef }) => {
 
     const { scene } = useThree();
 
-    const [jsonGeometry, setJsonGeometry] = useState(null);
-    const [objId, setObjId] = useState(null);
+    // const [jsonGeometries, setJsonGeometries] = useState([]);
+    // const [objIds, setObjIds] = useState([]);
 
     const getJsonObject = (objDataString) => {
 
-        const parts = objDataString.split(splitKey);
+        //console.log(objDataString);
+        const jsonData = JSON.parse(objDataString);
 
-        const jStringObj = parts[0];
-        const objId = parts[1];
+        jsonData.forEach((jsonString, index) => {
 
-        setObjId(objId);
-        setJsonGeometry(JSON.parse(jStringObj));
-    };
+            const parts = jsonString.split(splitKey);
 
-    //get rhino3dm and convert to Three Object3d
-    useEffect(() => {
-        if (!jsonGeometry || !objId)
-            return;
+            const rhObjectString = parts[0];
+            const objId = parts[1];
 
-        if (addedObjectsRef.current.has(objId)) {
-            console.log('object already added');
-            return;
-        }
+            // Parse the Rhino object string
+            const rhJsonObject = JSON.parse(rhObjectString)
 
-        rhino3dm().then((rh) => {
 
-            const commonObj = rh.CommonObject.decode(jsonGeometry);
-
-            if (!commonObj)
+            if (!rhJsonObject || !objId)
                 return;
 
-            const doc = new rh.File3dm();
+            //check objId exist in the scene
+            if (addedObjectsRef.current.has(objId)) {
+                const sceneObj = scene.getObjectByProperty('rhId', objId);
 
-            //add object to rh file
-            doc.objects().add(commonObj, null)
+                if (sceneObj) {
 
-            // create a copy of the doc.toByteArray data to get an ArrayBuffer
-            const buffer = doc.toByteArray().buffer
+                    //console.log('transformed');
+                    // Optionally, dispose of the object's geometry and material to free up memory
+                    if (sceneObj.geometry) sceneObj.geometry.dispose();
+                    if (sceneObj.material) sceneObj.material.dispose();
 
-            loader.parse(buffer, (obj) => {
 
-                //add Rhino objectId to Object3d userData
-                obj.userData.rhId = objId;
+                    scene.remove(sceneObj);
+                    addedObjectsRef.current.delete(objId);
+                }
+            }
 
-                obj.rotation.x = -Math.PI / 2; //for oreintation
+            rhino3dm().then((rh) => {
 
-                // add the new object to the scene directly
-                scene.add(obj);
-                addedObjectsRef.current.add(objId);
+                const doc = new rh.File3dm();
 
-            },
-                (error) => {
+                const commonObj = rh.CommonObject.decode(rhJsonObject);
+                if (!commonObj)
+                    return;
+
+                doc.objects().add(commonObj, null);
+                const buffer = doc.toByteArray().buffer;
+
+                loader.parse(buffer, (obj) => {
+                    //add Rhino objectId to Object3d
+                    obj.rhId = objId;
+
+                    obj.rotation.x = -Math.PI / 2; //for oreintation
+
+                    scene.add(obj);
+                    addedObjectsRef.current.add(objId);
+
+                    //console.log('object added');
+                }, (error) => {
                     console.error('Error loading Rhino object:', error); // onError callback
                 })
-        })
-
-    }, [jsonGeometry])
-
+            });
+        });
+    };
 
     //list added geometry socket and get the data
     useEffect(() => {

@@ -29,6 +29,7 @@ io.on("connection", (socket) => {
 
     socket.on(geometryAddKey, (data) => {
       try {
+        console.log(data);
         socket.broadcast.emit(geomAddedBoradcast, data);
       } catch (error) {
         console.error("Error processing 'doc' event:", error);

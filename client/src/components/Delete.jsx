@@ -8,29 +8,27 @@ const Delete = ({ socket, addedObjectsRef }) => {
 
     const { scene } = useThree();
 
-    const [objId, setObjId] = useState(null);
+    //const [objId, setObjId] = useState(null);
 
-    //on objId set delete the Object3d from scene and from addedObjectsRef
-    useEffect(() => {
+    const deleteTheObject = (objId) => {
         if (!scene || !objId)
             return;
-        const removeObjectFromScene = () => {
-            scene.children.forEach((child) => {
-                if (child.userData && child.userData.rhId && child.userData.rhId === objId) {
-                    scene.remove(child);
-                    addedObjectsRef.current.delete(objId);
 
-                    // Optionally, dispose of the object's geometry and material to free up memory
-                    if (child.geometry) child.geometry.dispose();
-                    if (child.material) child.material.dispose();
-                }
-            })
-        }
 
-        removeObjectFromScene();
 
-    }, [objId])
+        scene.children.forEach((child) => {
+            if (child.rhId && child.rhId === objId) {
 
+                // Optionally, dispose of the object's geometry and material to free up memory
+                if (child.geometry) child.geometry.dispose();
+                if (child.material) child.material.dispose();
+
+                scene.remove(child);
+                addedObjectsRef.current.delete(objId);
+
+            }
+        })
+    }
 
 
     //get data from socket
@@ -38,7 +36,7 @@ const Delete = ({ socket, addedObjectsRef }) => {
         if (!socket)
             return;
 
-        socket.on(deletedObjectSocketKey, (rhObjId) => setObjId(rhObjId));
+        socket.on(deletedObjectSocketKey, deleteTheObject);
     }, [socket])
 
 
