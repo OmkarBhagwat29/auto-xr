@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import Add from './components/Add';
 import Delete from './components/Delete';
+import AddTextDot from './components/features/AddTextDot';
 
 const App = () => {
 
@@ -12,7 +13,7 @@ const App = () => {
 
     //get data from socket
     const [socket, setSocket] = useState(null);
-    
+
     useEffect(() => {
         const newSocket = io.connect("http://localhost:3001");
         setSocket(newSocket);
@@ -28,10 +29,12 @@ const App = () => {
     return (
 
         <>
+
             <Add socket={socket} addedObjectsRef={addedObjectsRef} />
 
             <Delete socket={socket} addedObjectsRef={addedObjectsRef} />
 
+            {/* <AddTextDot textContent={"Hello App!!!\n I am fun"} position={[0, 0, 0]} /> */}
         </>
     )
 }

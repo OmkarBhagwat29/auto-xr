@@ -1,18 +1,46 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import rhino3dm from 'rhino3dm';
 
 import loader from '../constants/RhinoLoader';
 import { useThree } from '@react-three/fiber';
+import { handleDoubleClickOnObject } from '../helpers/EventListners';
 
 const addSocketKey = "get added rhino geometry";
 const splitKey = '_AUTO_'
 
 const Add = ({ socket, addedObjectsRef }) => {
 
-    const { scene } = useThree();
+    const { scene, camera } = useThree();
 
-    // const [jsonGeometries, setJsonGeometries] = useState([]);
-    // const [objIds, setObjIds] = useState([]);
+    // A Map to store the added THREE.Object3D instances with their object IDs
+    const addedObjectsMap = useRef(new Map());
+
+    //console.log(addedObjectsMap.current);
+
+    useEffect(() => {
+
+        const handleDoubleClick = (event) => {
+
+            console.log('double clicked!!!');
+
+            var objsAdded = Array.from(addedObjectsMap.current.values());
+
+            handleDoubleClickOnObject(event, camera, objsAdded);
+
+        }
+
+        window.addEventListener('dblclick', handleDoubleClick);
+
+        console.log('dbl event added');
+
+        return () => {
+            window.removeEventListener('dblclick', handleDoubleClick);
+            console.log('dblclick event removed');
+        };
+
+    }, [])
+
+
 
     const getJsonObject = (objDataString) => {
 
@@ -44,9 +72,10 @@ const Add = ({ socket, addedObjectsRef }) => {
                     if (sceneObj.geometry) sceneObj.geometry.dispose();
                     if (sceneObj.material) sceneObj.material.dispose();
 
-
                     scene.remove(sceneObj);
                     addedObjectsRef.current.delete(objId);
+
+                    addedObjectsMap.current.delete(objId);
                 }
             }
 
@@ -67,8 +96,12 @@ const Add = ({ socket, addedObjectsRef }) => {
 
                     obj.rotation.x = -Math.PI / 2; //for oreintation
 
+                    obj.on
+
                     scene.add(obj);
                     addedObjectsRef.current.add(objId);
+
+                    addedObjectsMap.current.set(objId, obj);
 
                     //console.log('object added');
                 }, (error) => {
