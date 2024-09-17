@@ -15,17 +15,19 @@
     "tailwindcss": "^3.4.11"
   },
   "dependencies": {
-    "@react-three/drei": "^9.89.0",
-    "@react-three/fiber": "^8.15.8",
-    "@react-three/xr": "^5.7.1",
+    "@react-three/drei": "^9.112.0",
+    "@react-three/fiber": "^8.17.7",
+    "@react-three/xr": "^6.2.8",
+    "@thatopen/components": "^2.2.11",
     "leva": "^0.9.35",
     "r3f-perf": "7.1",
     "react": "18.2",
     "react-dom": "18.2",
     "rhino3dm": "^8.9.0",
     "socket.io-client": "^4.7.2",
-    "three": "^0.159.0",
+    "three": "^0.160.1",
     "vercel": "^32.7.1",
-    "vite-plugin-copy": "^0.1.6"
+    "vite-plugin-copy": "^0.1.6",
+    "web-ifc": "^0.0.57"
   }
 }
